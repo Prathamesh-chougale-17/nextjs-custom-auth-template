@@ -10,7 +10,7 @@ const key = new TextEncoder().encode(secretKey);
 
 async function getCollection(collectionName: string) {
   const client = await clientPromise;
-  const db = client.db();
+  const db = client.db("auth");
   return db.collection(collectionName);
 }
 
@@ -111,7 +111,7 @@ async function encrypt(payload: SessionPayload): Promise<string> {
     .sign(key);
 }
 
-async function decrypt(session: string): Promise<SessionPayload | null> {
+async function decrypt(session: string | undefined = ''): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(session, key, {
       algorithms: ['HS256'],
