@@ -1,5 +1,4 @@
 "use client";
-
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -51,7 +50,7 @@ export function SignupButton() {
 
   return (
     <Button aria-disabled={pending} type="submit" className="mt-2 w-full">
-      {pending ? "Submitting..." : "Login"}
+      {pending ? "Submitting..." : "Sign up"}
     </Button>
   );
 }
