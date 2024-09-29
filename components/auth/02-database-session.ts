@@ -17,7 +17,7 @@ async function getCollection(collectionName: string) {
 type SessionPayload = {
   sessionId: string;
   userId: string;
-  expiresAt: number;
+  expiresAt: Date;
 };
 
 export async function createSession(userId: string) {
@@ -33,7 +33,7 @@ export async function createSession(userId: string) {
   const session = await encrypt({ 
     sessionId: result.insertedId.toHexString(),
     userId, 
-    expiresAt: expiresAt.getTime()
+    expiresAt: expiresAt
   });
 
   cookies().set('session', session, {
@@ -82,7 +82,7 @@ export async function updateSession(sessionId: string) {
   if (session) {
     const payload = await decrypt(session);
     if (payload) {
-      const updatedSession = await encrypt({ ...payload, expiresAt: expiresAt.getTime() });
+      const updatedSession = await encrypt({ ...payload, expiresAt: expiresAt });
       cookies().set('session', updatedSession, {
         httpOnly: true,
         secure: true,
